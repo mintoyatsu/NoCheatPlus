@@ -2,11 +2,11 @@ package cc.co.evenprime.bukkit.nocheat.actions;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
-import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.PermissibleBase;
 import org.bukkit.permissions.ServerOperator;
 
-public class NoCheatCommandSender extends PermissibleBase implements ConsoleCommandSender {
+public class NoCheatCommandSender extends PermissibleBase implements CommandSender {
 
     private static final ServerOperator serverOperator = new ServerOperator() {
 
@@ -25,17 +25,14 @@ public class NoCheatCommandSender extends PermissibleBase implements ConsoleComm
         super(serverOperator);
     }
 
-    @Override
     public String getName() {
         return "NoCheatCommandSender";
     }
 
-    @Override
     public void sendMessage(String message) {
         // We don't want messages
     }
 
-    @Override
     public Server getServer() {
         return Bukkit.getServer();
     }

@@ -29,20 +29,6 @@ public class InventoryEventManager extends EventManagerImpl {
         this.checks.add(new DropCheck(plugin));
 
         registerListener(Event.Type.PLAYER_DROP_ITEM, Priority.Lowest, true, plugin.getPerformance(EventType.INVENTORY));
-        registerListener(Event.Type.PLAYER_TELEPORT, Priority.Monitor, true, null);
-    }
-
-    @Override
-    protected void handlePlayerTeleportEvent(final PlayerTeleportEvent event, final Priority priority) {
-
-        try {
-            NoCheatPlayer player = plugin.getPlayer(event.getPlayer());
-            if(InventoryCheck.getConfig(player.getConfigurationStore()).closebeforeteleports && event.getTo() != null && !(event.getTo().getWorld().equals(player.getPlayer().getWorld()))) {
-                player.closeInventory();
-            }
-        } catch(NullPointerException e) {
-
-        }
     }
 
     @Override

@@ -54,27 +54,7 @@ public class FlyingCheck extends MovingCheck {
         double resultVert = 0;
         double result = 0;
 
-        // In case of creative gamemode, give at least 0.60 speed limit
-        // horizontal
-        double speedLimitHorizontal = player.isCreative() ? Math.max(creativeSpeed, ccmoving.flyingSpeedLimitHorizontal) : ccmoving.flyingSpeedLimitHorizontal;
-
-        speedLimitHorizontal *= player.getSpeedAmplifier();
-
-        resultHoriz = Math.max(0.0D, horizontalDistance - data.horizFreedom - speedLimitHorizontal);
-
-        boolean sprinting = player.isSprinting();
-
-        data.bunnyhopdelay--;
-
-        // Did he go too far?
-        if(resultHoriz > 0 && sprinting) {
-
-            // Try to treat it as a the "bunnyhop" problem
-            if(data.bunnyhopdelay <= 0 && resultHoriz < 0.4D) {
-                data.bunnyhopdelay = 9;
-                resultHoriz = 0;
-            }
-        }
+        resultHoriz = Math.max(0.0D, horizontalDistance - data.horizFreedom - ccmoving.flyingSpeedLimitHorizontal);
 
         resultHoriz *= 100;
 

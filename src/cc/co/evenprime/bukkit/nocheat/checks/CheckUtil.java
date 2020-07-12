@@ -125,11 +125,6 @@ public class CheckUtil {
         // Obvious
         types[Material.LADDER.getId()] = LADDER;
         types[Material.FENCE.getId()] = FENCE;
-        types[Material.FENCE_GATE.getId()] = FENCE;
-
-        // These are sometimes solid, sometimes not
-        types[Material.IRON_FENCE.getId()] = SOLID | NONSOLID;
-        types[Material.THIN_GLASS.getId()] = SOLID | NONSOLID;
 
         // Signs are NOT solid, despite the game claiming they are
         types[Material.WALL_SIGN.getId()] = NONSOLID;
@@ -148,9 +143,6 @@ public class CheckUtil {
         // nonsolid too
         types[Material.STONE_PLATE.getId()] = SOLID | NONSOLID;
         types[Material.WOOD_PLATE.getId()] = SOLID | NONSOLID;
-
-        // Player can stand on and "in" lilipads
-        types[Material.WATER_LILY.getId()] = SOLID | NONSOLID;
 
         /*
          * for(int i = 0; i < 256; i++) {

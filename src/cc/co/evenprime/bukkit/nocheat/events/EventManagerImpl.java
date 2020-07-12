@@ -27,7 +27,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
 
 import cc.co.evenprime.bukkit.nocheat.EventManager;
@@ -245,20 +244,6 @@ public abstract class EventManagerImpl implements EventManager {
         }
 
         @Override
-        public void onPlayerToggleSprint(final PlayerToggleSprintEvent event) {
-            if(ignoreCancelledEvents && event.isCancelled())
-                return;
-
-            if(measureTime != null && measureTime.isEnabled()) {
-                final long startTime = System.nanoTime();
-                m.handlePlayerToggleSprintEvent(event, priority);
-                measureTime.addTime(System.nanoTime() - startTime);
-            } else {
-                m.handlePlayerToggleSprintEvent(event, priority);
-            }
-        }
-
-        @Override
         public void onPlayerInteract(final PlayerInteractEvent event) {
             if(ignoreCancelledEvents && event.isCancelled())
                 return;
@@ -458,10 +443,6 @@ public abstract class EventManagerImpl implements EventManager {
     }
 
     protected void handleEntityAttackDamageByPlayerEvent(final EntityDamageByEntityEvent event, final Priority priority) {
-        handleEvent(event, priority);
-    }
-
-    protected void handlePlayerToggleSprintEvent(PlayerToggleSprintEvent event, Priority priority) {
         handleEvent(event, priority);
     }
 

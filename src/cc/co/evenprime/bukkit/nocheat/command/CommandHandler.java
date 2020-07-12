@@ -67,7 +67,7 @@ public class CommandHandler {
     private static boolean handlePermlistCommand(NoCheat plugin, CommandSender sender, String[] args) {
 
         // Get the player by name
-        Player player = plugin.getServer().getPlayerExact(args[1]);
+        Player player = plugin.getServer().getPlayer(args[1]); // getPlayerExact
         if(player == null) {
             sender.sendMessage("Unknown player: " + args[1]);
             return true;

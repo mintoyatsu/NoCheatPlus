@@ -136,44 +136,25 @@ public class RunningCheck extends MovingCheck {
         // How much further did the player move than expected??
         double distanceAboveLimit = 0.0D;
 
-        // A player is considered sprinting if the flag is set and if he has
-        // enough food level (configurable)
-        final boolean sprinting = player.isSprinting() && (player.getPlayer().getFoodLevel() > 5 || cc.allowHungrySprinting);
-
         double limit = 0.0D;
 
         String suffix = null;
 
-        if(cc.sneakingCheck && player.getPlayer().isSneaking() && !player.hasPermission(Permissions.MOVING_SNEAKING)) {
+        if(player.getPlayer().isSleeping() || (player.getPlayer().getWorld().getEnvironment().toString().equalsIgnoreCase("nether") && (int) player.getPlayer().getLocation().getY() >= 127)) {
+            limit = 0.0D;
+            suffix = "walking";
+        } else if(cc.sneakingCheck && player.getPlayer().isSneaking() && !player.hasPermission(Permissions.MOVING_SNEAKING)) {
             limit = cc.sneakingSpeedLimit;
             suffix = "sneaking";
         } else if(cc.swimmingCheck && isSwimming && !player.hasPermission(Permissions.MOVING_SWIMMING)) {
             limit = cc.swimmingSpeedLimit;
             suffix = "swimming";
-        } else if(!sprinting) {
+        } else {
             limit = cc.walkingSpeedLimit;
             suffix = "walking";
-        } else {
-            limit = cc.sprintingSpeedLimit;
-            suffix = "sprinting";
         }
-
-        // Taken directly from Minecraft code, should work
-        limit *= player.getSpeedAmplifier();
 
         distanceAboveLimit = totalDistance - limit - data.horizFreedom;
-
-        data.bunnyhopdelay--;
-
-        // Did he go too far?
-        if(distanceAboveLimit > 0 && sprinting) {
-
-            // Try to treat it as a the "bunnyhop" problem
-            if(data.bunnyhopdelay <= 0 && distanceAboveLimit > 0.05D && distanceAboveLimit < 0.4D) {
-                data.bunnyhopdelay = 9;
-                distanceAboveLimit = 0;
-            }
-        }
 
         if(distanceAboveLimit > 0) {
             // Try to consume the "buffer"

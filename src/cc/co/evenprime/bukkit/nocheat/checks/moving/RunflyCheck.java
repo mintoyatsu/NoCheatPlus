@@ -29,7 +29,7 @@ public class RunflyCheck extends MovingCheck {
             data.clearCriticalData();
             return null;
         }
-        final boolean flyAllowed = cc.allowFlying || player.hasPermission(Permissions.MOVING_FLYING) || (player.isCreative() && cc.identifyCreativeMode);
+        final boolean flyAllowed = cc.allowFlying || player.hasPermission(Permissions.MOVING_FLYING);
 
         /********************* EXECUTE THE FLY/JUMP/RUNNING CHECK ********************/
         // If the player is not allowed to fly and not allowed to run

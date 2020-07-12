@@ -8,7 +8,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.event.player.PlayerToggleSprintEvent;
 
 import cc.co.evenprime.bukkit.nocheat.NoCheat;
 
@@ -24,7 +23,6 @@ public class WorkaroundsEventManager extends EventManagerImpl {
         super(plugin);
 
         registerListener(Event.Type.PLAYER_MOVE, Priority.Highest, false, null);
-        registerListener(Event.Type.PLAYER_TOGGLE_SPRINT, Priority.Highest, false, null);
         registerListener(Event.Type.PLAYER_TELEPORT, Priority.Monitor, true, null);
         registerListener(Event.Type.PLAYER_PORTAL, Priority.Monitor, true, null);
         registerListener(Event.Type.PLAYER_RESPAWN, Priority.Monitor, true, null);
@@ -58,14 +56,6 @@ public class WorkaroundsEventManager extends EventManagerImpl {
         if(plugin.getPlayer(event.getPlayer()).getConfigurationStore().debug.overrideIdiocy) {
             event.setCancelled(false);
             event.setTo(event.getFrom().clone());
-        }
-    }
-
-    @Override
-    protected void handlePlayerToggleSprintEvent(final PlayerToggleSprintEvent event, final Priority priority) {
-        if(event.isCancelled() && event.isSprinting()) {
-            if(plugin.getPlayer(event.getPlayer()).getConfigurationStore().debug.overrideIdiocy)
-                event.setCancelled(false);
         }
     }
 

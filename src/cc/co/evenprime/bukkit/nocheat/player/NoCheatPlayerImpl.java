@@ -1,9 +1,7 @@
 package cc.co.evenprime.bukkit.nocheat.player;
 
 import net.minecraft.server.EntityPlayer;
-import net.minecraft.server.MobEffectList;
 
-import org.bukkit.GameMode;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
@@ -62,24 +60,6 @@ public class NoCheatPlayerImpl implements NoCheatPlayer {
         return player.getName();
     }
 
-    public int getTicksLived() {
-        return player.getTicksLived();
-    }
-
-    public float getSpeedAmplifier() {
-        EntityPlayer ep = ((CraftPlayer) player).getHandle();
-        if(ep.hasEffect(MobEffectList.FASTER_MOVEMENT)) {
-            // Taken directly from Minecraft code, should work
-            return 1.0F + 0.2F * (float) (ep.getEffect(MobEffectList.FASTER_MOVEMENT).getAmplifier() + 1);
-        } else {
-            return 1.0F;
-        }
-    }
-
-    public boolean isSprinting() {
-        return player.isSprinting();
-    }
-
     public void setLastUsedTime(long currentTimeInMilliseconds) {
         this.lastUsedTime = currentTimeInMilliseconds;
     }
@@ -90,13 +70,5 @@ public class NoCheatPlayerImpl implements NoCheatPlayer {
             lastUsedTime = currentTimeInMilliseconds;
         }
         return lastUsedTime + 60000L < currentTimeInMilliseconds;
-    }
-
-    public boolean isCreative() {
-        return player.getGameMode() == GameMode.CREATIVE;
-    }
-
-    public void closeInventory() {
-        ((CraftPlayer) this.player).getHandle().closeInventory();
     }
 }

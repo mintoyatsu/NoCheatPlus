@@ -25,14 +25,6 @@ public class NoFallCheck extends MovingCheck {
      */
     public PreciseLocation check(NoCheatPlayer player, MovingData data, CCMoving cc) {
 
-        // If the player is serverside in creative mode, we have to stop here to
-        // avoid hurting him when he switches back to "normal" mode
-        if(player.isCreative()) {
-            data.fallDistance = 0F;
-            data.lastAddedFallDistance = 0F;
-            return null;
-        }
-
         // This check is pretty much always a step behind for technical reasons.
         if(data.fromOnOrInGround) {
             // Start with zero fall distance

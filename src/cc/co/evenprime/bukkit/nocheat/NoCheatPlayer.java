@@ -17,15 +17,5 @@ public interface NoCheatPlayer {
 
     public boolean isDead();
 
-    public boolean isSprinting();
-
-    public int getTicksLived();
-
     public ConfigurationCacheStore getConfigurationStore();
-
-    public float getSpeedAmplifier();
-
-    public boolean isCreative();
-
-    public void closeInventory();
 }
