@@ -194,6 +194,22 @@ public class DefaultConfiguration extends Configuration {
             ActionList noswingActionList = new ActionList();
             noswingActionList.setActions(0, action.getActions("noswingLog fightCancel".split(" ")));
             setValue(FIGHT_NOSWING_ACTIONS, noswingActionList);
+
+            setValue(FIGHT_REACH_CHECK, true);
+            setValue(FIGHT_REACH_LIMIT, 400);
+            setValue(FIGHT_REACH_PENALTYTIME, 500);
+
+            ActionList reachActionList = new ActionList();
+            reachActionList.setActions(0, action.getActions("fightCancel".split(" ")));
+            reachActionList.setActions(10, action.getActions("fightReachLog fightCancel".split(" ")));
+            setValue(FIGHT_REACH_ACTIONS, reachActionList);
+
+            setValue(FIGHT_SPEED_CHECK, true);
+            setValue(FIGHT_SPEED_ATTACKLIMIT, 15);
+
+            ActionList speedActionList = new ActionList();
+            speedActionList.setActions(0, action.getActions("fightSpeedLog fightCancel".split(" ")));
+            setValue(FIGHT_SPEED_ACTIONS, speedActionList);
         }
     }
 
@@ -258,14 +274,14 @@ public class DefaultConfiguration extends Configuration {
             w(w, "log moveLogHighShort 0 15 high [player] failed [check]. VL [violations]");
             w(w, "");
             w(w, "# Gives a log message of the violation, only containing name, violation type and total violation value, at most once every second, only if more than 5 violations happened within the last minute (low) and immediatly (med,high)");
-            w(w, "log morepacketsLow 5 1 low [player] failed [check]: Sent [packets] more packets than expected. Total violation level [violations].");
-            w(w, "log morepacketsMed 0 1 med [player] failed [check]: Sent [packets] more packets than expected. Total violation level [violations].");
-            w(w, "log morepacketsHigh 0 1 high [player] failed [check]: Sent [packets] more packets than expected. Total violation level [violations].");
+            w(w, "log morepacketsLow 5 1 low [player] failed [check]: Sent [packets] more packets than expected. VL [violations]");
+            w(w, "log morepacketsMed 0 1 med [player] failed [check]: Sent [packets] more packets than expected. VL [violations]");
+            w(w, "log morepacketsHigh 0 1 high [player] failed [check]: Sent [packets] more packets than expected. VL [violations]");
             w(w, "");
             w(w, "# Gives a lengthy log message of the violation, containing name, location, violation type and total violation, at most once every 15 seconds, only if more than 3 violations happened within the last minute (low) and immediatly (med,high)");
-            w(w, "log moveLogLowLong 3 15 low [player] in [world] at [location] moving to [locationto] over distance [movedistance] failed check [check]. Total violation level so far [violations].");
-            w(w, "log moveLogMedLong 0 15 med [player] in [world] at [location] moving to [locationto] over distance [movedistance] failed check [check]. Total violation level so far [violations].");
-            w(w, "log moveLogHighLong 0 15 high [player] in [world] at [location] moving to [locationto] over distance [movedistance] failed check [check]. Total violation level so far [violations].");
+            w(w, "log moveLogLowLong 3 15 low [player] in [world] at [location] moving to [locationto] over distance [movedistance] failed check [check]. VL [violations]");
+            w(w, "log moveLogMedLong 0 15 med [player] in [world] at [location] moving to [locationto] over distance [movedistance] failed check [check]. VL [violations]");
+            w(w, "log moveLogHighLong 0 15 high [player] in [world] at [location] moving to [locationto] over distance [movedistance] failed check [check]. VL [violations]");
             w(w, "");
             w(w, "# Some other log messages that are limited a bit by default, to avoid too extreme spam");
             w(w, "log reachLog 0 5 med [player] failed [check]: tried to interact with a block over distance [reachdistance]. VL [violations]");
@@ -277,13 +293,12 @@ public class DefaultConfiguration extends Configuration {
             w(w, "log colorLog 0 5 med [player] failed [check]: Sent colored chat message \"[text]\". VL [violations]");
             w(w, "log dropLog 0 5 med [player] failed [check]: Tried to drop more items than allowed. VL [violations]");
             w(w, "");
-            w(w, "");
             w(w, "# Some log messages related to fighting, displaying the same text, but with different level (Info, Warning, Severe)");
-            w(w, "log fightDirectionLogLow 0 5 low [player] failed [check]: tried to attack out of sight entity. Total violation level so far [violations].");
-            w(w, "log fightDirectionLog 0 5 med [player] failed [check]: tried to attack out of sight entity. Total violation level so far [violations].");
-            w(w, "log fightDirectionLogHigh 0 5 high [player] failed [check]: tried to attack out of sight entity. Total violation level so far [violations].");
-            w(w, "");
-            w(w, "log fightSelfhitlog 0 1 med [player] failed [check]: tried to attack himself. Total violation level so far [violations].");
+            w(w, "log fightDirectionLogLow 0 5 low [player] failed [check]: tried to attack out of sight entity. VL [violations]");
+            w(w, "log fightDirectionLog 0 5 med [player] failed [check]: tried to attack out of sight entity. VL [violations]");
+            w(w, "log fightDirectionLogHigh 0 5 high [player] failed [check]: tried to attack out of sight entity. VL [violations]");
+            w(w, "log fightReachLog 0 5 med [player] failed [check]: tried to attack entity out of reach. VL [violations]");
+            w(w, "log fightSpeedLog 0 5 med [player] failed [check]: tried to attack more than [limit] times per second. VL [violations]");
             w(w, "");
             w(w, "# SPECIAL Actions: They will do something check dependant, usually cancel an event.");
             w(w, "#   - They start with the word 'special'");

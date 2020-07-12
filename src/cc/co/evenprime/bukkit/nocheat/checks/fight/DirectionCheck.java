@@ -3,8 +3,6 @@ package cc.co.evenprime.bukkit.nocheat.checks.fight;
 import java.util.Locale;
 
 import net.minecraft.server.Entity;
-import net.minecraft.server.EntityComplex;
-import net.minecraft.server.EntityComplexPart;
 import net.minecraft.server.EntityGiantZombie;
 import cc.co.evenprime.bukkit.nocheat.NoCheat;
 import cc.co.evenprime.bukkit.nocheat.NoCheatPlayer;
@@ -27,19 +25,19 @@ public class DirectionCheck extends FightCheck {
         // Get the width of the damagee
         Entity entity = data.damagee;
 
-        // Safeguard, if entity is Giant or Ender Dragon, this check will fail
+        // Safeguard, if entity is complex, this check will fail
         // due to giant and hard to define hitboxes
-        if(entity instanceof EntityComplex || entity instanceof EntityComplexPart || entity instanceof EntityGiantZombie) {
+        if(entity instanceof EntityGiantZombie) {
             return false;
         }
 
         final float width = entity.length > entity.width ? entity.length : entity.width;
+        // entity.height is broken and will always be 0, therefore calculate height instead
+        final double height = entity.boundingBox.e - entity.boundingBox.b;
 
-        // height = 2.0D as minecraft doesn't store the height of entities,
-        // and that should be enough. Because entityLocations are always set
-        // to center bottom of the hitbox, increase "y" location by 1/2
-        // height to get the "center" of the hitbox
-        final double off = CheckUtil.directionCheck(player, entity.locX, entity.locY + 1.0D, entity.locZ, width, 2.0D, cc.directionPrecision);
+        // Because entityLocations are always set to center bottom of the
+        // hitbox, divide the height by 2 to get the "center" of the hitbox
+        final double off = CheckUtil.directionCheck(player, entity.locX, entity.locY + (height / 2D), entity.locZ, width, height, cc.directionPrecision);
 
         if(off < 0.1D) {
             // Player did probably nothing wrong

@@ -134,6 +134,17 @@ public abstract class Configuration {
     public final static OptionNode        FIGHT_NOSWING_CHECK                        = new OptionNode("check", FIGHT_NOSWING, DataType.BOOLEAN);
     public final static OptionNode        FIGHT_NOSWING_ACTIONS                      = new OptionNode("actions", FIGHT_NOSWING, DataType.ACTIONLIST);
 
+    private final static OptionNode       FIGHT_REACH                                = new OptionNode("reach", FIGHT, DataType.PARENT);
+    public final static OptionNode        FIGHT_REACH_CHECK                          = new OptionNode("active", FIGHT_REACH, DataType.BOOLEAN);
+    public final static OptionNode        FIGHT_REACH_LIMIT                          = new OptionNode("distance", FIGHT_REACH, DataType.INTEGER);
+    public final static OptionNode        FIGHT_REACH_PENALTYTIME                    = new OptionNode("penaltytime", FIGHT_REACH, DataType.INTEGER);
+    public final static OptionNode        FIGHT_REACH_ACTIONS                        = new OptionNode("actions", FIGHT_REACH, DataType.ACTIONLIST);
+
+    private final static OptionNode       FIGHT_SPEED                                = new OptionNode("speed", FIGHT, DataType.PARENT);
+    public final static OptionNode        FIGHT_SPEED_CHECK                          = new OptionNode("active", FIGHT_SPEED, DataType.BOOLEAN);
+    public final static OptionNode        FIGHT_SPEED_ATTACKLIMIT                    = new OptionNode("attacklimit", FIGHT_SPEED, DataType.INTEGER);
+    public final static OptionNode        FIGHT_SPEED_ACTIONS                        = new OptionNode("actions", FIGHT_SPEED, DataType.ACTIONLIST);
+
     private final Map<OptionNode, Object> values;
     private final Configuration           defaults;
 

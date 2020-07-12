@@ -27,8 +27,10 @@ public class FightEventManager extends EventManagerImpl {
         super(plugin);
 
         this.checks = new ArrayList<FightCheck>(3);
+        this.checks.add(new SpeedCheck(plugin));
         this.checks.add(new NoswingCheck(plugin));
         this.checks.add(new DirectionCheck(plugin));
+        this.checks.add(new ReachCheck(plugin));
 
         registerListener(Event.Type.ENTITY_DAMAGE, Priority.Lowest, true, plugin.getPerformance(EventType.FIGHT));
         registerListener(Event.Type.PLAYER_ANIMATION, Priority.Monitor, false, null);
@@ -116,6 +118,10 @@ public class FightEventManager extends EventManagerImpl {
             s.add("fight.direction");
         if(f.check && f.noswingCheck)
             s.add("fight.noswing");
+        if(f.check && f.reachCheck)
+            s.add("fight.reach");
+        if(f.check && f.speedCheck)
+            s.add("fight.speed");
         return s;
     }
 }
