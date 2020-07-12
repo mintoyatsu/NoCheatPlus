@@ -47,17 +47,14 @@ public class MovingData implements DataItem {
     public float                  lastAddedFallDistance;
 
     public double                 horizontalBuffer;
-    public int                    bunnyhopdelay;
 
-    public int                    morePacketsCounter;
+    public long                   morePacketsLastTime;
     public int                    morePacketsBuffer       = 50;
     public int                    packets;
 
     public final PreciseLocation  morePacketsSetbackPoint = new PreciseLocation();
 
     public final PreciseLocation  teleportTo              = new PreciseLocation();
-
-    public int                    lastElapsedIngameSeconds;
 
     public final ExecutionHistory history                 = new ExecutionHistory();
 
@@ -69,18 +66,15 @@ public class MovingData implements DataItem {
 
     public String                 checknamesuffix         = "";
 
-    @Override
-    public void clearCriticalData() {
-        teleportTo.reset();
-        jumpPhase = 0;
+    public void clearRunFlyData() {
         runflySetBackPoint.reset();
+        jumpPhase = 0;
         fallDistance = 0;
         lastAddedFallDistance = 0;
-        bunnyhopdelay = 0;
-        morePacketsBuffer = 50;
+    }
+
+    public void clearMorePacketsData() {
         morePacketsSetbackPoint.reset();
-        lastElapsedIngameSeconds = 0;
-        morePacketsCounter = 0;
     }
 
     @Override

@@ -46,23 +46,6 @@ public class PlayerManager {
         return p;
     }
 
-    /**
-     * Reset data that may cause problems after e.g. changing the config
-     * 
-     */
-    public void clearCriticalData() {
-        for(NoCheatPlayer b : this.players.values()) {
-            b.getDataStore().clearCriticalData();
-        }
-    }
-
-    public void clearCriticalData(String playerName) {
-        NoCheatPlayer p = this.players.get(playerName.toLowerCase());
-        if(p != null) {
-            p.getDataStore().clearCriticalData();
-        }
-    }
-
     public void cleanDataMap() {
         long time = System.currentTimeMillis();
         List<String> removals = new ArrayList<String>(5);

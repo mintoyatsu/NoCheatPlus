@@ -43,9 +43,4 @@ public class FightData implements DataItem {
         map.put("fight.reach.failed", reachFailed);
         map.put("fight.speed.failed", speedFailed);
     }
-
-    @Override
-    public void clearCriticalData() {
-
-    }
 }

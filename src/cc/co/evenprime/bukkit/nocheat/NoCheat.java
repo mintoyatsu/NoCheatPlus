@@ -136,10 +136,6 @@ public class NoCheat extends JavaPlugin {
         log.log(level, message, cc);
     }
 
-    public void clearCriticalData(String playerName) {
-        players.clearCriticalData(playerName);
-    }
-
     public Performance getPerformance(EventType type) {
         return performance.get(type);
     }
@@ -151,22 +147,10 @@ public class NoCheat extends JavaPlugin {
         return result;
     }
 
-    public int getIngameSeconds() {
-        if(lagMeasureTask != null)
-            return lagMeasureTask.getIngameSeconds();
-        return 0;
-    }
-
     public boolean skipCheck() {
         if(lagMeasureTask != null)
             return lagMeasureTask.skipCheck();
         return false;
-    }
-
-    public long getIngameSecondDuration() {
-        if(lagMeasureTask != null)
-            return lagMeasureTask.getIngameSecondDuration();
-        return 1000L;
     }
 
     public void logToConsole(LogLevel low, String message) {
@@ -179,7 +163,6 @@ public class NoCheat extends JavaPlugin {
         conf.cleanup();
         this.conf = new ConfigurationManager(this.getDataFolder());
         players.cleanDataMap();
-        players.clearCriticalData();
     }
 
     /**

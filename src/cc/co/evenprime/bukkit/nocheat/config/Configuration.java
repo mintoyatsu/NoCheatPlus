@@ -32,6 +32,7 @@ public abstract class Configuration {
     private final static OptionNode       DEBUG                                      = new OptionNode("debug", ROOT, DataType.PARENT);
     public final static OptionNode        DEBUG_SHOWACTIVECHECKS                     = new OptionNode("showactivechecks", DEBUG, DataType.BOOLEAN);
     public final static OptionNode        DEBUG_COMPATIBILITY                        = new OptionNode("compatibility", DEBUG, DataType.BOOLEAN);
+    public final static OptionNode        DEBUG_MESSAGES                             = new OptionNode("messages", DEBUG, DataType.BOOLEAN);
 
     private final static OptionNode       INVENTORY                                  = new OptionNode("inventory", ROOT, DataType.PARENT);
     public final static OptionNode        INVENTORY_PREVENTITEMDUPE                  = new OptionNode("preventitemdupe", INVENTORY, DataType.BOOLEAN);

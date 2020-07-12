@@ -20,12 +20,6 @@ public class DataStore {
         dataMap.put(id, data);
     }
 
-    public void clearCriticalData() {
-        for(DataItem data : dataMap.values()) {
-            data.clearCriticalData();
-        }
-    }
-
     public void collectData(Map<String, Object> map) {
         for(DataItem data : dataMap.values()) {
             data.collectData(map);

@@ -32,6 +32,7 @@ public class DefaultConfiguration extends Configuration {
         {
             setValue(DEBUG_SHOWACTIVECHECKS, false);
             setValue(DEBUG_COMPATIBILITY, true);
+            setValue(DEBUG_MESSAGES, false);
         }
 
         /*** INVENTORY ***/
