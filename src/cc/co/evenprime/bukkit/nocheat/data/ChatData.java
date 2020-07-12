@@ -19,6 +19,7 @@ public class ChatData implements DataItem {
     public int                    colorFailed;
 
     public int                    messageCount = 0;
+    public int                    commandCount = 0;
     public long                   spamLastTime = 0;
     public final ExecutionHistory history      = new ExecutionHistory();
     public String                 message      = "";

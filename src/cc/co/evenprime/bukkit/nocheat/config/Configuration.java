@@ -113,7 +113,8 @@ public abstract class Configuration {
     public final static OptionNode        CHAT_SPAM_CHECK                            = new OptionNode("check", CHAT_SPAM, DataType.BOOLEAN);
     public final static OptionNode        CHAT_SPAM_WHITELIST                        = new OptionNode("whitelist", CHAT_SPAM, DataType.STRING);
     public final static OptionNode        CHAT_SPAM_TIMEFRAME                        = new OptionNode("timeframe", CHAT_SPAM, DataType.INTEGER);
-    public final static OptionNode        CHAT_SPAM_LIMIT                            = new OptionNode("limit", CHAT_SPAM, DataType.INTEGER);
+    public final static OptionNode        CHAT_SPAM_LIMIT                            = new OptionNode("messagelimit", CHAT_SPAM, DataType.INTEGER);
+    public final static OptionNode        CHAT_SPAM_COMMANDLIMIT                     = new OptionNode("commandlimit", CHAT_SPAM, DataType.INTEGER);
     public final static OptionNode        CHAT_SPAM_ACTIONS                          = new OptionNode("actions", CHAT_SPAM, DataType.ACTIONLIST);
 
     private final static OptionNode       CHAT_EMPTY                                 = new OptionNode("empty", CHAT, DataType.PARENT);

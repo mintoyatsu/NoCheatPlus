@@ -30,17 +30,22 @@ public class SpamCheck extends ChatCheck {
         if(data.spamLastTime + cc.spamTimeframe <= time) {
             data.spamLastTime = time;
             data.messageCount = 0;
+            data.commandCount = 0;
         }
         // Security check, if the system time changes
         else if(data.spamLastTime > time) {
             data.spamLastTime = Integer.MIN_VALUE;
         }
 
-        data.messageCount++;
+        if(data.message.startsWith("/"))
+            data.commandCount++;
+        else
+            data.messageCount++;
 
-        if(data.messageCount > cc.spamLimit) {
+        if(data.messageCount > cc.spamLimit || data.commandCount > cc.commandLimit) {
 
-            data.spamVL = data.messageCount - cc.spamLimit;
+            data.spamVL = Math.max(0, data.messageCount - cc.spamLimit);
+            data.spamVL += Math.max(0, data.commandCount - cc.commandLimit);
             data.spamTotalVL++;
             data.spamFailed++;
 

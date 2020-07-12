@@ -159,12 +159,13 @@ public class DefaultConfiguration extends Configuration {
 
             setValue(CHAT_SPAM_CHECK, true);
             setValue(CHAT_SPAM_WHITELIST, "");
-            setValue(CHAT_SPAM_TIMEFRAME, 5);
-            setValue(CHAT_SPAM_LIMIT, 5);
+            setValue(CHAT_SPAM_TIMEFRAME, 3);
+            setValue(CHAT_SPAM_LIMIT, 3);
+            setValue(CHAT_SPAM_COMMANDLIMIT, 12);
 
             ActionList spamActionList = new ActionList();
             spamActionList.setActions(0, action.getActions("spamLog chatCancel".split(" ")));
-            spamActionList.setActions(50, action.getActions("spamLog chatCancel spamkick".split(" ")));
+            spamActionList.setActions(30, action.getActions("spamLog chatCancel spamkick".split(" ")));
             setValue(CHAT_SPAM_ACTIONS, spamActionList);
 
             setValue(CHAT_EMPTY_CHECK, true);
