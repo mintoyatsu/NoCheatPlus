@@ -86,7 +86,7 @@ public class Explainations {
         set(Configuration.CHAT_CHECK, "If true, enable checks on PlayerChat events.");
 
         set(Configuration.CHAT_COLOR_CHECK, "If true, check if a player is trying to send a chat message with embedded color codes.");
-        set(Configuration.CHAT_COLOR_ACTIONS, "What should be done if a player is trying to send a chat message with embedded color codes.\nThis does not affect other plugins that colorize player chat messages.\n\"cancel\" means the color codes get removed from the message.\nUnit is number of colored chat messages sent by the player.");
+        set(Configuration.CHAT_COLOR_ACTIONS, "What should be done if a player is trying to send a chat message with embedded color codes.\nThis DOES affect other plugins that colorize player chat messages and will increase player VL.\n\"cancel\" means the color codes get removed from the message.\nUnit is number of colored chat messages sent by the player.");
 
         set(Configuration.CHAT_SPAM_CHECK, "If true, check if a player is sending too many messages within a set time frame.");
         set(Configuration.CHAT_SPAM_WHITELIST, "A comma-delimited list of characters or phrases to be ignored by the spam check.\nIf a message or command begins with one of these, it will always be sent.");
