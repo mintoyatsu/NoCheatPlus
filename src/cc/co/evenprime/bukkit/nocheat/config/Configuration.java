@@ -35,7 +35,6 @@ public abstract class Configuration {
     public final static OptionNode        DEBUG_MESSAGES                             = new OptionNode("messages", DEBUG, DataType.BOOLEAN);
 
     private final static OptionNode       INVENTORY                                  = new OptionNode("inventory", ROOT, DataType.PARENT);
-    public final static OptionNode        INVENTORY_PREVENTITEMDUPE                  = new OptionNode("preventitemdupe", INVENTORY, DataType.BOOLEAN);
     public static final OptionNode        INVENTORY_CHECK                            = new OptionNode("check", INVENTORY, DataType.BOOLEAN);
 
     private final static OptionNode       INVENTORY_DROP                             = new OptionNode("drop", INVENTORY, DataType.PARENT);
@@ -46,13 +45,10 @@ public abstract class Configuration {
 
     private final static OptionNode       MOVING                                     = new OptionNode("moving", ROOT, DataType.PARENT);
     public final static OptionNode        MOVING_CHECK                               = new OptionNode("check", MOVING, DataType.BOOLEAN);
-    public final static OptionNode        MOVING_IDENTIFYCREATIVEMODE                = new OptionNode("identifycreativemode", MOVING, DataType.BOOLEAN);
 
     private final static OptionNode       MOVING_RUNFLY                              = new OptionNode("runfly", MOVING, DataType.PARENT);
     public final static OptionNode        MOVING_RUNFLY_CHECK                        = new OptionNode("check", MOVING_RUNFLY, DataType.BOOLEAN);
     public final static OptionNode        MOVING_RUNFLY_WALKINGSPEEDLIMIT            = new OptionNode("walkingspeedlimit", MOVING_RUNFLY, DataType.INTEGER);
-    public final static OptionNode        MOVING_RUNFLY_SPRINTINGSPEEDLIMIT          = new OptionNode("sprintingspeedlimit", MOVING_RUNFLY, DataType.INTEGER);
-    public final static OptionNode        MOVING_RUNFLY_ALLOWHUNGRYSPRINTING         = new OptionNode("allowhungrysprinting", MOVING_RUNFLY, DataType.BOOLEAN);
     public final static OptionNode        MOVING_RUNFLY_JUMPHEIGHT                   = new OptionNode("jumpheight", MOVING_RUNFLY, DataType.INTEGER);
     public final static OptionNode        MOVING_RUNFLY_CHECKSNEAKING                = new OptionNode("checksneaking", MOVING_RUNFLY, DataType.BOOLEAN);
     public final static OptionNode        MOVING_RUNFLY_SNEAKINGSPEEDLIMIT           = new OptionNode("sneakingspeedlimit", MOVING_RUNFLY, DataType.INTEGER);

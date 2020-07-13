@@ -37,8 +37,6 @@ public class DefaultConfiguration extends Configuration {
 
         /*** INVENTORY ***/
         {
-            setValue(INVENTORY_PREVENTITEMDUPE, true);
-
             setValue(INVENTORY_CHECK, true);
 
             setValue(INVENTORY_DROP_CHECK, true);
@@ -54,13 +52,10 @@ public class DefaultConfiguration extends Configuration {
         /*** MOVING ***/
         {
             setValue(MOVING_CHECK, true);
-            setValue(MOVING_IDENTIFYCREATIVEMODE, true);
 
             setValue(MOVING_RUNFLY_CHECK, true);
 
             setValue(MOVING_RUNFLY_WALKINGSPEEDLIMIT, 22);
-            setValue(MOVING_RUNFLY_SPRINTINGSPEEDLIMIT, 40);
-            setValue(MOVING_RUNFLY_ALLOWHUNGRYSPRINTING, false);
             setValue(MOVING_RUNFLY_JUMPHEIGHT, 135);
 
             setValue(MOVING_RUNFLY_CHECKSNEAKING, true);

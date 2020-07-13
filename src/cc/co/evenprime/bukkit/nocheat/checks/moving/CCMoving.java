@@ -14,10 +14,7 @@ public class CCMoving implements ConfigItem {
     public final boolean    check;
 
     public final boolean    runflyCheck;
-    public final boolean    identifyCreativeMode;
     public final double     walkingSpeedLimit;
-    public final double     sprintingSpeedLimit;
-    public final boolean    allowHungrySprinting;
     public final double     jumpheight;
     public final boolean    swimmingCheck;
     public final double     swimmingSpeedLimit;
@@ -41,12 +38,9 @@ public class CCMoving implements ConfigItem {
     public CCMoving(Configuration data) {
 
         check = data.getBoolean(Configuration.MOVING_CHECK);
-        identifyCreativeMode = data.getBoolean(Configuration.MOVING_IDENTIFYCREATIVEMODE);
 
         runflyCheck = data.getBoolean(Configuration.MOVING_RUNFLY_CHECK);
         walkingSpeedLimit = ((double) data.getInteger(Configuration.MOVING_RUNFLY_WALKINGSPEEDLIMIT)) / 100D;
-        sprintingSpeedLimit = ((double) data.getInteger(Configuration.MOVING_RUNFLY_SPRINTINGSPEEDLIMIT)) / 100D;
-        allowHungrySprinting = data.getBoolean(Configuration.MOVING_RUNFLY_ALLOWHUNGRYSPRINTING);
         jumpheight = ((double) data.getInteger(Configuration.MOVING_RUNFLY_JUMPHEIGHT)) / 100D;
         actions = data.getActionList(Configuration.MOVING_RUNFLY_ACTIONS);
 
