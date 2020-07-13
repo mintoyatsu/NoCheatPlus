@@ -15,7 +15,7 @@ public class ColorCheck extends ChatCheck {
 
     public boolean check(NoCheatPlayer player, ChatData data, CCChat cc) {
 
-        if(data.message.matches(".*\247.*")) {
+        if(data.message.contains("\247")) {
 
             data.colorVL += 1;
             data.colorTotalVL += 1;
