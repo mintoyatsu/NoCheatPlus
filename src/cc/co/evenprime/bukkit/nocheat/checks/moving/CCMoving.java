@@ -27,6 +27,7 @@ public class CCMoving implements ConfigItem {
     public final ActionList flyingActions;
 
     public final boolean    nofallCheck;
+    public final boolean    nofallaggressive;
     public final float      nofallMultiplier;
     public final ActionList nofallActions;
 
@@ -56,6 +57,7 @@ public class CCMoving implements ConfigItem {
         flyingActions = data.getActionList(Configuration.MOVING_RUNFLY_FLYINGACTIONS);
 
         nofallCheck = data.getBoolean(Configuration.MOVING_RUNFLY_CHECKNOFALL);
+        nofallaggressive = data.getBoolean(Configuration.MOVING_RUNFLY_NOFALLAGGRESSIVE);
         nofallMultiplier = ((float) data.getInteger(Configuration.MOVING_RUNFLY_NOFALLMULTIPLIER)) / 100F;
         nofallActions = data.getActionList(Configuration.MOVING_RUNFLY_NOFALLACTIONS);
 

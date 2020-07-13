@@ -71,4 +71,10 @@ public class NoCheatPlayerImpl implements NoCheatPlayer {
         }
         return lastUsedTime + 60000L < currentTimeInMilliseconds;
     }
+
+    @Override
+    public void dealFallDamage() {
+        EntityPlayer p = ((CraftPlayer) player).getHandle();
+        p.b(0D, true);
+    }
 }

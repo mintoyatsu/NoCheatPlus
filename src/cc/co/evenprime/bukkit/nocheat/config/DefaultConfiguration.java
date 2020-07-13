@@ -71,6 +71,7 @@ public class DefaultConfiguration extends Configuration {
             setValue(MOVING_RUNFLY_ACTIONS, movingActionList);
 
             setValue(MOVING_RUNFLY_CHECKNOFALL, true);
+            setValue(MOVING_RUNFLY_NOFALLAGGRESSIVE, true);
             setValue(MOVING_RUNFLY_NOFALLMULTIPLIER, 200);
 
             ActionList nofallActionList = new ActionList();

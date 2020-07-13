@@ -46,8 +46,9 @@ public class Explainations {
         set(Configuration.MOVING_RUNFLY_ACTIONS, "What should be done if a player moves faster than the speed limit(s) or jumps higher than allowed.\nUnits are in 1/100 of a block above the limit.");
 
         set(Configuration.MOVING_RUNFLY_CHECKNOFALL, "If true, check if a player is avoiding fall damage on a hacked client.");
+        set(Configuration.MOVING_RUNFLY_NOFALLAGGRESSIVE, "This will catch additional types of hacks and deal fall damage to players directly.");
         set(Configuration.MOVING_RUNFLY_NOFALLMULTIPLIER, "The percentage of fall damage that should be dealt to the player.\nNoCheat will almost always underestimate fall damage so using a value greater than 100 percent is advised.\nUnit is percent of the estimated original fall damage, default is 200 percent.");
-        set(Configuration.MOVING_RUNFLY_NOFALLACTIONS, "What should be done if a player is detected avoiding fall damage.\nUnit is number of blocks the player fell.");
+        set(Configuration.MOVING_RUNFLY_NOFALLACTIONS, "What should be done if a player is avoiding fall damage.\nUnit is number of blocks the player fell.");
 
         set(Configuration.MOVING_RUNFLY_ALLOWLIMITEDFLYING, "If true, instead of doing the above checks for walking/swimming/sneaking, allow flying and only limit the flying speed.");
         set(Configuration.MOVING_RUNFLY_FLYINGSPEEDLIMITVERTICAL, "Set the speed limit for moving vertical while flying.\nUnit is 1/100 of a block, default is 100.");

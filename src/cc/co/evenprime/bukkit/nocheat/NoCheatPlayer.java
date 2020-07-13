@@ -18,4 +18,6 @@ public interface NoCheatPlayer {
     public boolean isDead();
 
     public ConfigurationCacheStore getConfigurationStore();
+
+    public void dealFallDamage();
 }
