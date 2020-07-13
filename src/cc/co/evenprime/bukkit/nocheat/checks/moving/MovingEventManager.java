@@ -87,10 +87,6 @@ public class MovingEventManager extends EventManagerImpl {
     @Override
     public void handlePlayerTeleportEvent(final PlayerTeleportEvent event, final Priority priority) {
 
-        // No typo here, I really want to only handle cancelled events
-        if(!event.isCancelled())
-            return;
-
         NoCheatPlayer player = plugin.getPlayer(event.getPlayer());
         final MovingData data = MovingCheck.getData(player.getDataStore());
 
