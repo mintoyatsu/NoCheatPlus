@@ -33,6 +33,10 @@ public class MovingData implements DataItem {
     public double                 morePacketsTotalVL;
     public int                    morePacketsFailed;
 
+    public double                 morePacketsVehicleVL;
+    public double                 morePacketsVehicleTotalVL;
+    public int                    morePacketsVehicleFailed;
+
     public int                    jumpPhase;
 
     public final PreciseLocation  runflySetBackPoint      = new PreciseLocation();
@@ -52,14 +56,21 @@ public class MovingData implements DataItem {
     public int                    morePacketsBuffer       = 50;
     public int                    packets;
 
+    public long                   morePacketsVehicleLastTime;
+    public int                    morePacketsVehicleBuffer = 50;
+    public int                    packetsVehicle;
+
     public final PreciseLocation  morePacketsSetbackPoint = new PreciseLocation();
+    public final PreciseLocation  morePacketsVehicleSetbackPoint = new PreciseLocation();
 
     public final PreciseLocation  teleportTo              = new PreciseLocation();
 
     public final ExecutionHistory history                 = new ExecutionHistory();
 
     public final PreciseLocation  from                    = new PreciseLocation();
+    public final PreciseLocation  fromVehicle             = new PreciseLocation();
     public final PreciseLocation  to                      = new PreciseLocation();
+    public final PreciseLocation  toVehicle               = new PreciseLocation();
 
     public boolean                fromOnOrInGround;
     public boolean                toOnOrInGround;
@@ -77,6 +88,10 @@ public class MovingData implements DataItem {
         morePacketsSetbackPoint.reset();
     }
 
+    public void clearMorePacketsVehicleData() {
+        morePacketsVehicleSetbackPoint.reset();
+    }
+
     @Override
     public void collectData(Map<String, Object> map) {
         map.put("moving.running.vl", (int) runflyRunningTotalVL);
@@ -85,6 +100,7 @@ public class MovingData implements DataItem {
         map.put("moving.swimming.vl", (int) runflySwimmingTotalVL);
         map.put("moving.nofall.vl", (int) nofallTotalVL);
         map.put("moving.morepackets.vl", (int) morePacketsTotalVL);
+        map.put("moving.morepacketsvehicle.vl", (int) morePacketsVehicleTotalVL);
 
         map.put("moving.running.failed", runflyRunningFailed);
         map.put("moving.flying.failed", runflyFlyingFailed);
@@ -92,5 +108,6 @@ public class MovingData implements DataItem {
         map.put("moving.swimming.failed", runflySwimmingFailed);
         map.put("moving.nofall.failed", nofallFailed);
         map.put("moving.morepackets.failed", morePacketsFailed);
+        map.put("moving.morepacketsvehicle.failed", morePacketsVehicleFailed);
     }
 }

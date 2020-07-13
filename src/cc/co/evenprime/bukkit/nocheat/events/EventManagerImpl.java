@@ -25,9 +25,12 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
+import org.bukkit.event.vehicle.VehicleListener;
+import org.bukkit.event.vehicle.VehicleMoveEvent;
 
 import cc.co.evenprime.bukkit.nocheat.EventManager;
 import cc.co.evenprime.bukkit.nocheat.NoCheat;
@@ -256,6 +259,21 @@ public abstract class EventManagerImpl implements EventManager {
                 m.handlePlayerInteractEvent(event, priority);
             }
         }
+
+        @Override
+        public void onPlayerQuit(final PlayerQuitEvent event) {
+            // Can't be cancelled
+            // if(ignoreCancelledEvents && event.isCancelled())
+            // return;
+
+            if(measureTime != null && measureTime.isEnabled()) {
+                final long startTime = System.nanoTime();
+                m.handlePlayerQuitEvent(event, priority);
+                measureTime.addTime(System.nanoTime() - startTime);
+            } else {
+                m.handlePlayerQuitEvent(event, priority);
+            }
+        }
     }
 
     private static class EntityL extends EntityListener {
@@ -345,6 +363,36 @@ public abstract class EventManagerImpl implements EventManager {
         }
     }
 
+    private static class VehicleL extends VehicleListener {
+
+        private final EventManagerImpl m;
+        private final Priority priority;
+        private final boolean ignoreCancelledEvents;
+        private final Performance measureTime;
+
+        public VehicleL(EventManagerImpl m, Priority priority, boolean ignoreCancelled, Performance measureTime) {
+            this.m = m;
+            this.priority = priority;
+            this.ignoreCancelledEvents = ignoreCancelled;
+            this.measureTime = measureTime;
+        }
+
+        @Override
+        public void onVehicleMove(final VehicleMoveEvent event) {
+            // Can't be cancelled
+            // if(ignoreCancelledEvents && event.isCancelled())
+            // return;
+
+            if (measureTime != null && measureTime.isEnabled()) {
+                final long startTime = System.nanoTime();
+                m.handleVehicleMoveEvent(event, priority);
+                measureTime.addTime(System.nanoTime() - startTime);
+            } else {
+                m.handleVehicleMoveEvent(event, priority);
+            }
+        }
+    }
+
     public EventManagerImpl(NoCheat plugin) {
         this.plugin = plugin;
     }
@@ -368,6 +416,9 @@ public abstract class EventManagerImpl implements EventManager {
         case LIVING_ENTITY:
         case ENTITY:
             Bukkit.getServer().getPluginManager().registerEvent(type, new EntityL(this, priority, ignoreCancelled, performance), priority, plugin);
+            break;
+        case VEHICLE:
+            Bukkit.getServer().getPluginManager().registerEvent(type, new VehicleL(this, priority, ignoreCancelled, performance), priority, plugin);
             break;
         default:
             System.out.println("Can't register a listener for " + type);
@@ -455,6 +506,14 @@ public abstract class EventManagerImpl implements EventManager {
     }
 
     protected void handlePlayerInteractEvent(PlayerInteractEvent event, Priority priority) {
+        handleEvent(event, priority);
+    }
+
+    protected void handlePlayerQuitEvent(final PlayerQuitEvent event, final Priority priority) {
+        handleEvent(event, priority);
+    }
+
+    protected void handleVehicleMoveEvent(final VehicleMoveEvent event, final Priority priority) {
         handleEvent(event, priority);
     }
 }

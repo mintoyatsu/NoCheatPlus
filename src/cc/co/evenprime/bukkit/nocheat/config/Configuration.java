@@ -69,6 +69,10 @@ public abstract class Configuration {
     public final static OptionNode        MOVING_MOREPACKETS_CHECK                   = new OptionNode("check", MOVING_MOREPACKETS, DataType.BOOLEAN);
     public final static OptionNode        MOVING_MOREPACKETS_ACTIONS                 = new OptionNode("actions", MOVING_MOREPACKETS, DataType.ACTIONLIST);
 
+    private final static OptionNode       MOVING_MOREPACKETSVEHICLE                  = new OptionNode("morepacketsvehicle", MOVING, DataType.PARENT);
+    public final static OptionNode        MOVING_MOREPACKETSVEHICLE_CHECK            = new OptionNode("check", MOVING_MOREPACKETSVEHICLE, DataType.BOOLEAN);
+    public final static OptionNode        MOVING_MOREPACKETSVEHICLE_ACTIONS          = new OptionNode("actions", MOVING_MOREPACKETSVEHICLE, DataType.ACTIONLIST);
+
     private final static OptionNode       BLOCKBREAK                                 = new OptionNode("blockbreak", ROOT, DataType.PARENT);
     public final static OptionNode        BLOCKBREAK_CHECK                           = new OptionNode("check", BLOCKBREAK, DataType.BOOLEAN);
 

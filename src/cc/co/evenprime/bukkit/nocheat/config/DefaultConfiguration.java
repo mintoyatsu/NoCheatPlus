@@ -97,6 +97,14 @@ public class DefaultConfiguration extends Configuration {
             morepacketsActionList.setActions(60, action.getActions("morepacketsHigh moveCancel".split(" ")));
             setValue(MOVING_MOREPACKETS_ACTIONS, morepacketsActionList);
 
+            setValue(MOVING_MOREPACKETSVEHICLE_CHECK, true);
+
+            ActionList morepacketsvehicleActionList = new ActionList();
+            morepacketsvehicleActionList.setActions(0, action.getActions("morepacketsLow moveCancel".split(" ")));
+            morepacketsvehicleActionList.setActions(30, action.getActions("morepacketsMed moveCancel".split(" ")));
+            morepacketsvehicleActionList.setActions(60, action.getActions("morepacketsHigh moveCancel".split(" ")));
+            setValue(MOVING_MOREPACKETSVEHICLE_ACTIONS, morepacketsvehicleActionList);
+
         }
 
         /*** BLOCKBREAK ***/

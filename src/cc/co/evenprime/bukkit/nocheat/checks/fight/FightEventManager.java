@@ -26,7 +26,7 @@ public class FightEventManager extends EventManagerImpl {
     public FightEventManager(NoCheat plugin) {
         super(plugin);
 
-        this.checks = new ArrayList<FightCheck>(3);
+        this.checks = new ArrayList<FightCheck>(4);
         this.checks.add(new SpeedCheck(plugin));
         this.checks.add(new NoswingCheck(plugin));
         this.checks.add(new DirectionCheck(plugin));

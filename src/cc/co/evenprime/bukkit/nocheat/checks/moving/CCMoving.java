@@ -34,6 +34,9 @@ public class CCMoving implements ConfigItem {
     public final boolean    morePacketsCheck;
     public final ActionList morePacketsActions;
 
+    public final boolean    morePacketsVehicleCheck;
+    public final ActionList morePacketsVehicleActions;
+
     public final double     flyingHeightLimit;
 
     public CCMoving(Configuration data) {
@@ -63,6 +66,9 @@ public class CCMoving implements ConfigItem {
 
         morePacketsCheck = data.getBoolean(Configuration.MOVING_MOREPACKETS_CHECK);
         morePacketsActions = data.getActionList(Configuration.MOVING_MOREPACKETS_ACTIONS);
+
+        morePacketsVehicleCheck = data.getBoolean(Configuration.MOVING_MOREPACKETSVEHICLE_CHECK);
+        morePacketsVehicleActions = data.getActionList(Configuration.MOVING_MOREPACKETSVEHICLE_ACTIONS);
 
     }
 }

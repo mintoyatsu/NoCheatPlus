@@ -59,6 +59,9 @@ public class Explainations {
         set(Configuration.MOVING_MOREPACKETS_CHECK, "If true, check if a player is sending too many packets per second.\nUnder normal circumstances, a client shouldn't send more than 22 packets per second.");
         set(Configuration.MOVING_MOREPACKETS_ACTIONS, "What should be done if a player sends more packets than normal.\nUnits are packets per second above the limit.");
 
+        set(Configuration.MOVING_MOREPACKETSVEHICLE_CHECK, "If true, check if a player is sending too many packets per second while inside a vehicle.\nUnder normal circumstances, a client shouldn't send more than 22 packets per second.");
+        set(Configuration.MOVING_MOREPACKETSVEHICLE_ACTIONS, "What should be done if a player sends more packets than normal while inside a vehicle.\nUnits are packets per second above the limit.");
+
         set(Configuration.BLOCKBREAK_CHECK, "If true, enable checks on BlockBreak events.");
 
         set(Configuration.BLOCKBREAK_REACH_CHECK, "If true, check if a player is breaking blocks too far away.");

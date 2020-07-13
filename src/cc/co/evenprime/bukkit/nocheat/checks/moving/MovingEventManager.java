@@ -5,15 +5,22 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
+import org.bukkit.event.vehicle.VehicleMoveEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import cc.co.evenprime.bukkit.nocheat.NoCheat;
@@ -37,6 +44,8 @@ public class MovingEventManager extends EventManagerImpl {
 
     private final List<MovingCheck> checks;
 
+    private final MorePacketsVehicleCheck morepacketsvehicleCheck;
+
     public MovingEventManager(NoCheat plugin) {
 
         super(plugin);
@@ -46,12 +55,17 @@ public class MovingEventManager extends EventManagerImpl {
         checks.add(new RunflyCheck(plugin));
         checks.add(new MorePacketsCheck(plugin));
 
+        morepacketsvehicleCheck = new MorePacketsVehicleCheck(plugin);
+
         registerListener(Event.Type.PLAYER_MOVE, Priority.Lowest, true, plugin.getPerformance(EventType.MOVING));
+        registerListener(Event.Type.VEHICLE_MOVE, Priority.Lowest, true, plugin.getPerformance(EventType.MOVING));
         registerListener(Event.Type.PLAYER_VELOCITY, Priority.Monitor, true, plugin.getPerformance(EventType.VELOCITY));
         registerListener(Event.Type.BLOCK_PLACE, Priority.Monitor, true, plugin.getPerformance(EventType.BLOCKPLACE));
+        registerListener(Event.Type.PLAYER_INTERACT, Priority.Lowest, true, null);
         registerListener(Event.Type.PLAYER_TELEPORT, Priority.Highest, false, null);
         registerListener(Event.Type.PLAYER_PORTAL, Priority.Monitor, false, null);
         registerListener(Event.Type.PLAYER_RESPAWN, Priority.Monitor, false, null);
+        registerListener(Event.Type.PLAYER_QUIT, Priority.Monitor, false, null);
     }
 
     @Override
@@ -96,20 +110,19 @@ public class MovingEventManager extends EventManagerImpl {
         } else {
             // Only if it wasn't NoCheat, drop data from morepackets check
             data.clearMorePacketsData();
+            data.clearMorePacketsVehicleData();
         }
 
         // Always forget runfly specific data
         data.teleportTo.reset();
         data.clearRunFlyData();
-
-        return;
-
     }
 
     @Override
     public void handlePlayerPortalEvent(PlayerPortalEvent event, Event.Priority priority) {
         final MovingData data = MovingCheck.getData(plugin.getPlayer(event.getPlayer()).getDataStore());
         data.clearMorePacketsData();
+        data.clearMorePacketsVehicleData();
         data.clearRunFlyData();
     }
 
@@ -117,13 +130,16 @@ public class MovingEventManager extends EventManagerImpl {
     public void handlePlayerRespawnEvent(PlayerRespawnEvent event, Event.Priority priority) {
         final MovingData data = MovingCheck.getData(plugin.getPlayer(event.getPlayer()).getDataStore());
         data.clearMorePacketsData();
+        data.clearMorePacketsVehicleData();
         data.clearRunFlyData();
     }
 
     @Override
     public void handlePlayerMoveEvent(final PlayerMoveEvent event, final Priority priority) {
 
-        // Don't need to handle world teleports
+        // Don't care for movements that are very high distance or to another
+        // world (such that it is very likely the event data was modified by
+        // another plugin before we got it)
         if(!event.getFrom().getWorld().equals(event.getTo().getWorld()) || event.getFrom().distanceSquared(event.getTo()) > 400) {
             return;
         }
@@ -223,6 +239,111 @@ public class MovingEventManager extends EventManagerImpl {
         }
     }
 
+    /**
+     * When an vehicle moves, it will be checked for various
+     * suspicious behaviour.
+     *
+     * @param event
+     *            The VehicleMoveEvent
+     */
+    @Override
+    public void handleVehicleMoveEvent(final VehicleMoveEvent event, final Priority priority) {
+
+        // Don't care for movements that are very high distance or to another
+        // world (such that it is very likely the event data was modified by
+        // another plugin before we got it)
+        if(!event.getFrom().getWorld().equals(event.getTo().getWorld()) || event.getFrom().distanceSquared(event.getTo()) > 400) {
+            return;
+        }
+
+        // Don't care for vehicles without passenger
+        if(event.getVehicle().getPassenger() == null || !(event.getVehicle().getPassenger() instanceof Player)) {
+            return;
+        }
+
+        // Get the world-specific configuration that applies here
+        final NoCheatPlayer player = plugin.getPlayer((Player) event.getVehicle().getPassenger());
+
+        final CCMoving cc = MovingCheck.getConfig(player.getConfigurationStore());
+
+        final MovingData data = MovingCheck.getData(player.getDataStore());
+
+        if(!cc.check || player.hasPermission(Permissions.MOVING)) {
+            // Just because it is allowed now, doesn't mean it will always
+            // be. So forget data about the vehicle related to moving
+            data.clearMorePacketsVehicleData();
+            return;
+        }
+
+        // Get some data that's needed from this event, to avoid passing the
+        // event itself on to the checks (and risk to
+        // accidentally modifying the event there)
+
+        final Location to = event.getTo();
+
+        data.fromVehicle.set(event.getFrom());
+        data.toVehicle.set(to);
+
+        // This variable will have the modified data of the event (new
+        // "to"-location)
+        PreciseLocation newTo = null;
+
+        if(morepacketsvehicleCheck.isEnabled(cc) && !player.hasPermission(morepacketsvehicleCheck.getPermission())) {
+            newTo = morepacketsvehicleCheck.check(player, data, cc);
+        }
+
+        // Did the check(s) decide we need a new "to"-location?
+        if(newTo != null) {
+            // Drop the usual items
+            event.getVehicle().getWorld().dropItemNaturally(event.getVehicle().getLocation(), new ItemStack(Material.WOOD, 3));
+            event.getVehicle().getWorld().dropItemNaturally(event.getVehicle().getLocation(), new ItemStack(Material.STICK, 2));
+            // Remove the passenger
+            if (event.getVehicle().getPassenger() != null) {
+                event.getVehicle().setPassenger(null);
+            }
+            // Destroy the vehicle
+            event.getVehicle().remove();
+
+            data.teleportTo.set(newTo);
+        }
+    }
+
+    /**
+     * If a player tries to place a boat on the ground, the event
+     * will be cancelled.
+     *
+     * @param event
+     *            The PlayerInteractEvent
+     */
+    @Override
+    public void handlePlayerInteractEvent(final PlayerInteractEvent event, final Priority priority) {
+        if(!event.getPlayer().hasPermission(Permissions.MOVING_BOATONGROUND)
+                && event.getAction() == Action.RIGHT_CLICK_BLOCK
+                && event.getPlayer().getItemInHand().getType() == Material.BOAT
+                && event.getClickedBlock().getType() != Material.WATER
+                && event.getClickedBlock().getType() != Material.STATIONARY_WATER
+                // This also makes sure there are no water blocks next to the clicked block
+                && event.getClickedBlock().getRelative(event.getBlockFace()).getType() != Material.WATER
+                && event.getClickedBlock().getRelative(event.getBlockFace()).getType() != Material.STATIONARY_WATER) {
+            event.setCancelled(true);
+        }
+    }
+
+    /**
+     * This events listener fixes the exploitation of the safe
+     * respawn location (usually exploited with gravel or sand).
+     *
+     * @param event
+     */
+    @Override
+    public void handlePlayerQuitEvent(final PlayerQuitEvent event, final Priority priority) {
+        if(!event.getPlayer().hasPermission(Permissions.MOVING_RESPAWNTRICK)
+                && (event.getPlayer().getLocation().getBlock().getType() == Material.GRAVEL || event.getPlayer().getLocation().getBlock().getType() == Material.SAND)) {
+            event.getPlayer().getLocation().getBlock().setType(Material.AIR);
+            event.getPlayer().getLocation().add(0, 1, 0).getBlock().setType(Material.AIR);
+        }
+    }
+
     public List<String> getActiveChecks(ConfigurationCacheStore cc) {
         LinkedList<String> s = new LinkedList<String>();
 
@@ -245,6 +366,8 @@ public class MovingEventManager extends EventManagerImpl {
             }
             if(m.morePacketsCheck)
                 s.add("moving.morepackets");
+            if(m.morePacketsVehicleCheck)
+                s.add("moving.morepacketsvehicle");
         }
 
         return s;
