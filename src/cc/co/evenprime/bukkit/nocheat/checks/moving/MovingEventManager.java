@@ -123,6 +123,11 @@ public class MovingEventManager extends EventManagerImpl {
     @Override
     public void handlePlayerMoveEvent(final PlayerMoveEvent event, final Priority priority) {
 
+        // Don't need to handle world teleports
+        if(!event.getFrom().getWorld().equals(event.getTo().getWorld()) || event.getFrom().distanceSquared(event.getTo()) > 400) {
+            return;
+        }
+
         // Get the world-specific configuration that applies here
         final NoCheatPlayer player = plugin.getPlayer(event.getPlayer());
 
