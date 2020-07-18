@@ -64,6 +64,9 @@ public class DefaultConfiguration extends Configuration {
             setValue(MOVING_RUNFLY_CHECKSWIMMING, true);
             setValue(MOVING_RUNFLY_SWIMMINGSPEEDLIMIT, 18);
 
+            setValue(MOVING_RUNFLY_CHECKVEHICLE, true);
+            setValue(MOVING_RUNFLY_VEHICLESPEEDLIMIT, 44);
+
             ActionList movingActionList = new ActionList();
             movingActionList.setActions(0, action.getActions("moveLogLowShort moveCancel".split(" ")));
             movingActionList.setActions(100, action.getActions("moveLogMedShort moveCancel".split(" ")));

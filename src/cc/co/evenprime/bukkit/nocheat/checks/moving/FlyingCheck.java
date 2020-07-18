@@ -19,8 +19,6 @@ public class FlyingCheck extends MovingCheck {
         super(plugin, "moving.flying", null);
     }
 
-    private static final double creativeSpeed = 0.60D;
-
     public PreciseLocation check(NoCheatPlayer player, MovingData data, CCMoving ccmoving) {
 
         final PreciseLocation setBack = data.runflySetBackPoint;

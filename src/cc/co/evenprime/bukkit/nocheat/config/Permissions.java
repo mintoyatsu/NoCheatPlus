@@ -15,6 +15,7 @@ public class Permissions {
     public final static String  MOVING_SNEAKING      = MOVING + ".sneaking";
     public final static String  MOVING_SWIMMING      = MOVING + ".swimming";
     public final static String  MOVING_FLYING        = MOVING + ".flying";
+    public final static String  MOVING_VEHICLE       = MOVING + ".vehicle";
     public final static String  MOVING_NOFALL        = MOVING + ".nofall";
     public final static String  MOVING_MOREPACKETS   = MOVING + ".morepackets";
     public final static String  MOVING_MOREPACKETSVEHICLE = MOVING + ".morepacketsvehicle";

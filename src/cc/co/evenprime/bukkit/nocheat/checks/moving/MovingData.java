@@ -25,6 +25,9 @@ public class MovingData implements DataItem {
     public double                 runflySwimmingTotalVL;
     public int                    runflySwimmingFailed;
 
+    public double                 runflyVehicleTotalVL;
+    public int                    runflyVehicleFailed;
+
     public double                 nofallVL;
     public double                 nofallTotalVL;
     public int                    nofallFailed;
@@ -40,6 +43,7 @@ public class MovingData implements DataItem {
     public int                    jumpPhase;
 
     public final PreciseLocation  runflySetBackPoint      = new PreciseLocation();
+    public final PreciseLocation  runflyVehicleSetBackPoint = new PreciseLocation();
 
     public double                 vertFreedom;
     public double                 vertVelocity;
@@ -51,6 +55,7 @@ public class MovingData implements DataItem {
     public float                  lastAddedFallDistance;
 
     public double                 horizontalBuffer;
+    public double                 horizontalBufferVehicle;
 
     public long                   morePacketsLastTime;
     public int                    morePacketsBuffer       = 50;
@@ -84,6 +89,8 @@ public class MovingData implements DataItem {
         lastAddedFallDistance = 0;
     }
 
+    public void clearRunFlyVehicleData() { runflyVehicleSetBackPoint.reset(); }
+
     public void clearMorePacketsData() {
         morePacketsSetbackPoint.reset();
     }
@@ -98,6 +105,7 @@ public class MovingData implements DataItem {
         map.put("moving.flying.vl", (int) runflyFlyingTotalVL);
         map.put("moving.sneaking.vl", (int) runflySneakingTotalVL);
         map.put("moving.swimming.vl", (int) runflySwimmingTotalVL);
+        map.put("moving.vehicle.vl", (int) runflyVehicleTotalVL);
         map.put("moving.nofall.vl", (int) nofallTotalVL);
         map.put("moving.morepackets.vl", (int) morePacketsTotalVL);
         map.put("moving.morepacketsvehicle.vl", (int) morePacketsVehicleTotalVL);
@@ -106,6 +114,7 @@ public class MovingData implements DataItem {
         map.put("moving.flying.failed", runflyFlyingFailed);
         map.put("moving.sneaking.failed", runflySneakingFailed);
         map.put("moving.swimming.failed", runflySwimmingFailed);
+        map.put("moving.vehicle.failed", runflyVehicleFailed);
         map.put("moving.nofall.failed", nofallFailed);
         map.put("moving.morepackets.failed", morePacketsFailed);
         map.put("moving.morepacketsvehicle.failed", morePacketsVehicleFailed);

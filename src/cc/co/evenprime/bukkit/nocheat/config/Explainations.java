@@ -43,6 +43,8 @@ public class Explainations {
         set(Configuration.MOVING_RUNFLY_SWIMMINGSPEEDLIMIT, "Set the speed limit for moving horizontal while in water.\nUnit is 1/100 of a block, default is 18.");
         set(Configuration.MOVING_RUNFLY_CHECKSNEAKING, "Use a separate speed limit for sneaking players.");
         set(Configuration.MOVING_RUNFLY_SNEAKINGSPEEDLIMIT, "Set the speed limit for moving horizontal while sneaking.\nUnit is 1/100 of a block, default is 14.");
+        set(Configuration.MOVING_RUNFLY_CHECKVEHICLE, "Limit speed of players in vehicles.");
+        set(Configuration.MOVING_RUNFLY_VEHICLESPEEDLIMIT, "Set the speed limit for moving horizontal while in a vehicle.\nUnit is 1/100 of a block, default is 44.");
         set(Configuration.MOVING_RUNFLY_ACTIONS, "What should be done if a player moves faster than the speed limit(s) or jumps higher than allowed.\nUnits are in 1/100 of a block above the limit.");
 
         set(Configuration.MOVING_RUNFLY_CHECKNOFALL, "If true, check if a player is avoiding fall damage on a hacked client.");

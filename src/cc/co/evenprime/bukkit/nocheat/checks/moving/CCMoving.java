@@ -20,6 +20,8 @@ public class CCMoving implements ConfigItem {
     public final double     swimmingSpeedLimit;
     public final boolean    sneakingCheck;
     public final double     sneakingSpeedLimit;
+    public final boolean    vehicleCheck;
+    public final double     vehicleSpeedLimit;
     public final ActionList actions;
     public final boolean    allowFlying;
     public final double     flyingSpeedLimitVertical;
@@ -52,6 +54,8 @@ public class CCMoving implements ConfigItem {
         swimmingSpeedLimit = ((double) data.getInteger(Configuration.MOVING_RUNFLY_SWIMMINGSPEEDLIMIT)) / 100D;
         sneakingCheck = data.getBoolean(Configuration.MOVING_RUNFLY_CHECKSNEAKING);
         sneakingSpeedLimit = ((double) data.getInteger(Configuration.MOVING_RUNFLY_SNEAKINGSPEEDLIMIT)) / 100D;
+        vehicleCheck = data.getBoolean(Configuration.MOVING_RUNFLY_CHECKVEHICLE);
+        vehicleSpeedLimit = ((double) data.getInteger(Configuration.MOVING_RUNFLY_VEHICLESPEEDLIMIT)) / 100D;
 
         allowFlying = data.getBoolean(Configuration.MOVING_RUNFLY_ALLOWLIMITEDFLYING);
         flyingSpeedLimitVertical = ((double) data.getInteger(Configuration.MOVING_RUNFLY_FLYINGSPEEDLIMITVERTICAL)) / 100D;

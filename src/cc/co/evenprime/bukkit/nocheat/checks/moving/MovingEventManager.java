@@ -7,6 +7,9 @@ import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Boat;
+import org.bukkit.entity.Minecart;
+import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
@@ -44,7 +47,7 @@ public class MovingEventManager extends EventManagerImpl {
 
     private final List<MovingCheck> checks;
 
-    private final MorePacketsVehicleCheck morepacketsvehicleCheck;
+    private final List<MovingCheck> checksVehicle;
 
     public MovingEventManager(NoCheat plugin) {
 
@@ -55,7 +58,10 @@ public class MovingEventManager extends EventManagerImpl {
         checks.add(new RunflyCheck(plugin));
         checks.add(new MorePacketsCheck(plugin));
 
-        morepacketsvehicleCheck = new MorePacketsVehicleCheck(plugin);
+        this.checksVehicle = new ArrayList<MovingCheck>(2);
+
+        checksVehicle.add(new SpeedingVehicleCheck(plugin));
+        checksVehicle.add(new MorePacketsVehicleCheck(plugin));
 
         registerListener(Event.Type.PLAYER_MOVE, Priority.Lowest, true, plugin.getPerformance(EventType.MOVING));
         registerListener(Event.Type.VEHICLE_MOVE, Priority.Lowest, true, plugin.getPerformance(EventType.MOVING));
@@ -256,7 +262,7 @@ public class MovingEventManager extends EventManagerImpl {
             return;
         }
 
-        // Don't care for vehicles without passenger
+        // Don't care about vehicles without a passenger
         if(event.getVehicle().getPassenger() == null || !(event.getVehicle().getPassenger() instanceof Player)) {
             return;
         }
@@ -268,9 +274,13 @@ public class MovingEventManager extends EventManagerImpl {
 
         final MovingData data = MovingCheck.getData(player.getDataStore());
 
+        // Various calculations related to velocity estimates
+        updateVelocities(data);
+
         if(!cc.check || player.hasPermission(Permissions.MOVING)) {
             // Just because it is allowed now, doesn't mean it will always
             // be. So forget data about the vehicle related to moving
+            data.clearRunFlyVehicleData();
             data.clearMorePacketsVehicleData();
             return;
         }
@@ -288,21 +298,29 @@ public class MovingEventManager extends EventManagerImpl {
         // "to"-location)
         PreciseLocation newTo = null;
 
-        if(morepacketsvehicleCheck.isEnabled(cc) && !player.hasPermission(morepacketsvehicleCheck.getPermission())) {
-            newTo = morepacketsvehicleCheck.check(player, data, cc);
+        for(MovingCheck check : checksVehicle) {
+            if(newTo == null && check.isEnabled(cc) && !player.hasPermission(check.getPermission())) {
+                newTo = check.check(player, data, cc);
+            }
         }
 
         // Did the check(s) decide we need a new "to"-location?
         if(newTo != null) {
             // Drop the usual items
-            event.getVehicle().getWorld().dropItemNaturally(event.getVehicle().getLocation(), new ItemStack(Material.WOOD, 3));
-            event.getVehicle().getWorld().dropItemNaturally(event.getVehicle().getLocation(), new ItemStack(Material.STICK, 2));
+            if(event.getVehicle() instanceof Boat) {
+                event.getVehicle().getWorld().dropItemNaturally(event.getVehicle().getLocation(), new ItemStack(Material.WOOD, 3));
+                event.getVehicle().getWorld().dropItemNaturally(event.getVehicle().getLocation(), new ItemStack(Material.STICK, 2));
+            } else if(event.getVehicle() instanceof Minecart) {
+                event.getVehicle().getWorld().dropItemNaturally(event.getVehicle().getLocation(), new ItemStack(Material.MINECART, 1));
+            }
             // Remove the passenger
             if (event.getVehicle().getPassenger() != null) {
                 event.getVehicle().setPassenger(null);
             }
             // Destroy the vehicle
-            event.getVehicle().remove();
+            if (! (event.getVehicle() instanceof Pig)) {
+                event.getVehicle().remove();
+            }
 
             data.teleportTo.set(newTo);
         }
@@ -358,6 +376,8 @@ public class MovingEventManager extends EventManagerImpl {
                         s.add("moving.swimming");
                     if(m.sneakingCheck)
                         s.add("moving.sneaking");
+                    if(m.vehicleCheck)
+                        s.add("moving.vehicle");
                     if(m.nofallCheck)
                         s.add("moving.nofall");
                 } else

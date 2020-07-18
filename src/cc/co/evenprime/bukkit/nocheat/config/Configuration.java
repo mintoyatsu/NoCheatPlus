@@ -54,6 +54,8 @@ public abstract class Configuration {
     public final static OptionNode        MOVING_RUNFLY_SNEAKINGSPEEDLIMIT           = new OptionNode("sneakingspeedlimit", MOVING_RUNFLY, DataType.INTEGER);
     public final static OptionNode        MOVING_RUNFLY_CHECKSWIMMING                = new OptionNode("checkswimming", MOVING_RUNFLY, DataType.BOOLEAN);
     public final static OptionNode        MOVING_RUNFLY_SWIMMINGSPEEDLIMIT           = new OptionNode("swimmingspeedlimit", MOVING_RUNFLY, DataType.INTEGER);
+    public final static OptionNode        MOVING_RUNFLY_CHECKVEHICLE                 = new OptionNode("checkvehicle", MOVING_RUNFLY, DataType.BOOLEAN);
+    public final static OptionNode        MOVING_RUNFLY_VEHICLESPEEDLIMIT            = new OptionNode("vehiclespeedlimit", MOVING_RUNFLY, DataType.INTEGER);
     public final static OptionNode        MOVING_RUNFLY_ACTIONS                      = new OptionNode("actions", MOVING_RUNFLY, DataType.ACTIONLIST);
     public final static OptionNode        MOVING_RUNFLY_CHECKNOFALL                  = new OptionNode("checknofall", MOVING_RUNFLY, DataType.BOOLEAN);
     public final static OptionNode        MOVING_RUNFLY_NOFALLAGGRESSIVE             = new OptionNode("nofallaggressivemode", MOVING_RUNFLY, DataType.BOOLEAN);
